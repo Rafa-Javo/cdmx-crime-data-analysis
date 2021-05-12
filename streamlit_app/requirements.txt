@@ -3,3 +3,4 @@
 # platform: win-64
 matplotlib==3.3.3
 plotly==4.14.3
+seaborn==0.11.1
