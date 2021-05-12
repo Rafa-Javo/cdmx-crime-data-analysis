@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -19,7 +20,8 @@ month_to_num = {key: i+1 for i,key in enumerate(month_days)}
 num_to_month = {(i+1): key for i,key in enumerate(month_days)}
 
 #! leemos los datos
-DATA_URL = ("streamlit_app\purged_carpetas_de_inv_pgj_cdmx.csv")
+DATA_URL = os.path.join(os.path.dirname(__file__), 'purged_carpetas_de_inv_pgj_cdmx.csv')
+#DATA_URL = ("purged_carpetas_de_inv_pgj_cdmx.csv")
 # DATA_URL = ("data/Delitos Alto Impacto municipio Morelia 2018-2019-2020.xlsx")
 
 
