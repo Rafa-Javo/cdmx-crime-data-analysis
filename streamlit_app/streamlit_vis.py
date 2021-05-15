@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from streamlit_folium import folium_static
 import folium
 from folium.plugins import HeatMap#, HeatMapWithTime
-import pydeck as pdk
+#import pydeck as pdk
 
 month_days = {'Enero':31,
               'Febrero':28,'Marzo':31, 
@@ -46,7 +46,7 @@ data = load_data()
 data = data.dropna()
 st.sidebar.markdown('# Filtros')
 st.sidebar.markdown('## Delitos')
-choice = st.sidebar.multiselect('Escoge delito(s)', (sorted(list(data.delito.unique()))), key='54')
+choice = st.sidebar.multiselect('Escoge delito(s)', (sorted(list(data.delito.unique()))), default = ['ROBO A REPARTIDOR CON VIOLENCIA','ROBO A REPARTIDOR SIN VIOLENCIA','ROBO A REPARTIDOR Y VEHICULO CON VIOLENCIA','ROBO A REPARTIDOR Y VEHICULO SIN VIOLENCIA'], key='54')
 
 st.sidebar.markdown("### Horario")
 if not st.sidebar.checkbox("Todo el día", True,key='2'):
@@ -70,7 +70,7 @@ meses = st.sidebar.multiselect('Meses',
 ('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'), default=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'])
 
 list(data.fecha_hechos.dt.year.unique())
-anios = st.sidebar.multiselect('Años', (list(range(2016,2020))), default = list(range(2016,2020)))
+anios = st.sidebar.multiselect('Años', (list(range(2016,2020))), default = list(range(2016,2019)))
 
 subdata = data
 
@@ -172,6 +172,9 @@ m6=folium.Map(location=[19.425821, -99.1897989],tiles='Stamen Toner',zoom_start=
 HeatMap(data=heat,radius=9.5).add_to(m6)
 folium_static(m6)
 
+
+
+# Mapa choropleth ..
 
 
 # ------------------------------------------------------------------------------------------------------ #
@@ -297,5 +300,3 @@ st.plotly_chart(fig)
 
 st.markdown("### Información")
 st.markdown("- Los datos son de libre acceso y fueron obtenidos el 3 de diciembre de 2020 antes de las 20:44hrs en [este link](https://datos.cdmx.gob.mx/explore/dataset/carpetas-de-investigacion-pgj-cdmx/export/?dataChart=eyJxdWVyaWVzIjpbeyJjaGFydHMiOlt7InR5cGUiOiJjb2x1bW4iLCJmdW5jIjoiQ09VTlQiLCJ5QXhpcyI6ImxvbiIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6InJhbmdlLUFjY2VudCJ9XSwieEF4aXMiOiJhb19oZWNob3MiLCJtYXhwb2ludHMiOjUwLCJ0aW1lc2NhbGUiOiIiLCJzb3J0IjoiIiwic2VyaWVzQnJlYWtkb3duIjoiZGVsaXRvIiwic2VyaWVzQnJlYWtkb3duVGltZXNjYWxlIjoiIiwic3RhY2tlZCI6Im5vcm1hbCIsImNvbmZpZyI6eyJkYXRhc2V0IjoiY2FycGV0YXMtZGUtaW52ZXN0aWdhY2lvbi1wZ2otY2RteCIsIm9wdGlvbnMiOnsicmVmaW5lLmRlbGl0byI6IlZJT0xBQ0lPTiJ9fX1dLCJkaXNwbGF5TGVnZW5kIjp0cnVlLCJhbGlnbk1vbnRoIjp0cnVlLCJ0aW1lc2NhbGUiOiIifQ%3D%3D).    \n- El código de este proyecto está aquí: https://github.com/Rafa-Javo/cdmx-crime-data-analysis.     \n- Es importante señalar que los crímenes denunciados/registrados representan solo una porción de los crímenes totales cometidos. En la [ENVIPE 2020](https://www.inegi.org.mx/contenidos/programas/envipe/2020/doc/envipe2020_mex.pdf) se estima que a nivel nacional, en 2019, se denunciaron 11% de los delitos. Y en 69.1% de los casos se inició una Carpeta de Investigación.    \n- La fecha utilizada en las visualizaciones es la fecha de los hechos, no la fecha del inicio de la carpeta de investigación. \n- Sólo hay datos para la mitad de 2019, por lo que para ver la distribución mensual se recomienda omitir ese año y solo incluir de 2016-2018.")
-'''
-'''
