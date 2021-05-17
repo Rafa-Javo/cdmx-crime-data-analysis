@@ -1,8 +1,14 @@
 import os
 import streamlit as st
 import pandas as pd
+
 import plotly.express as px
-import seaborn as sns
+#import plotly.io as pio
+#pio.templates.default = "plotly_dark"
+
+#import seaborn as sns
+#sns.set_style("darkgrid")
+
 import matplotlib.pyplot as plt
 from streamlit_folium import folium_static
 import folium
@@ -185,8 +191,7 @@ else:
 
 
 # ------------------------------------------------------------------------------------------------------ #
-
-
+# ------------------------------------------------------------------------------------------------------ #
 # COMPARATIVA ANUAL
 st.markdown('### Comparativa anual con los parámetros especificados')
 intmeses = [month_to_num[i] for i in meses]
@@ -197,7 +202,7 @@ for m in range(1,13):
 gra = pd.DataFrame()
 gra['meses'] = [num_to_month[i][:3] for i in range(1,13)]
 gra.set_index('meses',inplace=True)
-sns.set_style("darkgrid")
+
 for año in anios:
     time_series = subdata[['fecha_hechos']]#subdata.drop(columns=['lat','lon','Fiscalia','Municipio','Colonia','CalleNumero','Lugar','Arma','Violencia','FechaInicio'])
     #st.write(time_series)          # DA ERROR ESTA LÍNEA NO SÉ PORQUÉ
@@ -211,11 +216,21 @@ for año in anios:
 
     gra[año] = cri_mes
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
-ax = sns.lineplot(data=gra)
-ax.set(ylabel = "Crímenes")
+#st.set_option('deprecation.showPyplotGlobalUse', False)
+#ax = sns.lineplot(data=gra)
+#ax.set(ylabel = "Crímenes")
+#st.write(gra)
+#st.pyplot()
+# ------------------------------------------------------------------------------------------------------ #
+# COMPARATIVA ANUAL 2
+fig = px.line(gra,labels={
+                     "value": "crímenes",
+                     "variable": "año",
+                     "meses": "mes"
+                 })
 
-st.pyplot()
+st.plotly_chart(fig)
+# ------------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------------ #
 
 
