@@ -25,7 +25,7 @@ DATA_URL = os.path.join(os.path.dirname(__file__), 'purged_carpetas_de_inv_fgj_c
 # DATA_URL = ("data/Delitos Alto Impacto municipio Morelia 2018-2019-2020.xlsx")
 
 
-st.title("Carpetas de Investigación CDMX - datos de la pgj")
+st.title("Carpetas de Investigación CDMX - datos de la FGJ")
 
 
 @st.cache(persist=False)
