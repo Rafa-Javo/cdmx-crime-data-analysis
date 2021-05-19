@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 
 import plotly.express as px
+import plotly.graph_objects as go
 #import plotly.io as pio
 #pio.templates.default = "plotly_dark"
 
@@ -54,7 +55,7 @@ st.sidebar.markdown('# Filtros')
 st.sidebar.markdown('## Delitos')
 choice = st.sidebar.multiselect('Escoge delito(s)', (sorted(list(data.delito.unique()))), default = ['ROBO A REPARTIDOR CON VIOLENCIA','ROBO A REPARTIDOR SIN VIOLENCIA','ROBO A REPARTIDOR Y VEHICULO CON VIOLENCIA','ROBO A REPARTIDOR Y VEHICULO SIN VIOLENCIA'], key='54')
 
-st.sidebar.markdown("### Horario")
+st.sidebar.markdown("## Horario/Meses/Años")
 if not st.sidebar.checkbox("Todo el día", True,key='2'):
     #start = st.sidebar.number_input('Hora inicio', min_value=0, max_value=23, value=5, step=1)
     #end = st.sidebar.number_input('Hora fin', min_value=0, max_value=23, value=8, step=1)
@@ -96,17 +97,17 @@ subdata = subdata[subdata['fecha_hechos'].dt.month.isin(nums)]
 # Filtrando por anio
 subdata = subdata[subdata['fecha_hechos'].dt.year.isin(anios)]
 
-# Especificando la cantidad de delitos en la visualización
-st.markdown('## {} delitos registrados*.'.format(subdata.shape[0]))
+# Especificando la cantidad de carpetas en la visualización
+st.markdown('## {} carpetas registradas*.'.format(subdata.shape[0]))
 
 # ------------------------------------------------------------------------------------------------------ #
 
 
 # HISTOGRAMA: (DELITOS x CATEGORÍA)
 crimenes_por_tipo = subdata['delito'].value_counts()
-crimenes_por_tipo = pd.DataFrame({'Tipo':crimenes_por_tipo.index, 'Crímenes':crimenes_por_tipo.values})
-st.markdown('### Crímenes por tipo')
-fig = px.bar(crimenes_por_tipo, x='Tipo', y='Crímenes', height=500) #, color='Crímenes'
+crimenes_por_tipo = pd.DataFrame({'Tipo':crimenes_por_tipo.index, 'Carpetas':crimenes_por_tipo.values})
+st.markdown('### Carpetas por tipo de delito')
+fig = px.bar(crimenes_por_tipo, x='Tipo', y='Carpetas', height=500) #, color='Crímenes'
 st.plotly_chart(fig)
 
 # SERIE DE TIEMPO: (DELITOS x UNIDAD DE TIEMPO)
@@ -193,7 +194,7 @@ else:
 # ------------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------------ #
 # COMPARATIVA ANUAL
-st.markdown('### Comparativa anual con los parámetros especificados')
+st.markdown('### Comparativa anual')
 intmeses = [month_to_num[i] for i in meses]
 for m in range(1,13):
     if m not in intmeses:
@@ -224,7 +225,7 @@ for año in anios:
 # ------------------------------------------------------------------------------------------------------ #
 # COMPARATIVA ANUAL 2
 fig = px.line(gra,labels={
-                     "value": "crímenes",
+                     "value": "carpetas",
                      "variable": "año",
                      "meses": "mes"
                  })
@@ -275,9 +276,9 @@ for i,h in enumerate(horas):
     distribucion.append( subd.shape[0])
 df = pd.DataFrame(
                     {'hora': horas,
-                    'delitos': distribucion
+                    'carpetas': distribucion
                     })
-fig = px.bar(df, x='hora', y='delitos', height=500) #, color='Crímenes'
+fig = px.bar(df, x='hora', y='carpetas', height=500) #, color='Crímenes'
 st.plotly_chart(fig)
 
 
@@ -293,9 +294,9 @@ for i,d in enumerate(dia_semana):
     distribucion.append( subd.shape[0])
 df = pd.DataFrame(
                     {'dia': dia_str,
-                    'delitos': distribucion
+                    'carpetas': distribucion
                     })
-fig = px.bar(df, x='dia', y='delitos', height=500) #, color='Crímenes'
+fig = px.bar(df, x='dia', y='carpetas', height=500) #, color='Crímenes'
 st.plotly_chart(fig)
 
 
@@ -311,14 +312,23 @@ for i,m in enumerate(mes):
     distribucion.append( subd.shape[0])
 df = pd.DataFrame(
                     {'mes': mes_str,
-                    'delitos': distribucion
+                    'carpetas': distribucion
                     })
-fig = px.bar(df, x='mes', y='delitos', height=500) #, color='Crímenes'
+fig = px.bar(df, x='mes', y='carpetas', height=500) #, color='Crímenes'
 st.plotly_chart(fig)
 
+## Stacked histogram ..
+#fig = go.Figure()
+#for delito in subdata.delito.unique():
+#    fig.add_trace(go.Histogram(x=subdata[subdata.delito==delito].fecha_hechos.dt.month, name=delito[:50]))
+## The two histograms are drawn on top of another
+#fig.update_layout(barmode='stack')
+#fig.update_yaxes(visible=False, showticklabels=True)
+##fig.show()
+#st.plotly_chart(fig)
 
 # ------------------------------------------------------------------------------------------------------ #
 # INFORMACIÓN
 
 st.markdown("### Información")
-st.markdown("- *Registros con valores válidos en los campos utilizados para las visualizaciones. \n- Los datos son de libre acceso y fueron obtenidos el 16 de mayo de 2021 en [este link](https://datos.cdmx.gob.mx/dataset/carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico).    \n- El código de este proyecto está aquí: https://github.com/Rafa-Javo/cdmx-crime-data-analysis.     \n- Es importante señalar que los crímenes denunciados/registrados representan solo una porción de los crímenes totales cometidos. En la [ENVIPE 2020](https://www.inegi.org.mx/contenidos/programas/envipe/2020/doc/envipe2020_mex.pdf) se estima que a nivel nacional, en 2019, se denunciaron 11% de los delitos. Y en 69.1% de los casos se inició una Carpeta de Investigación.    \n- La fecha utilizada en las visualizaciones es la fecha de los hechos, no la fecha del inicio de la carpeta de investigación. ")
+st.markdown("- *Registros con valores válidos en los campos utilizados para las visualizaciones. \n- Los datos son de libre acceso y fueron obtenidos el 16 de mayo de 2021 en [este link](https://datos.cdmx.gob.mx/dataset/carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico).    \n- El código de este proyecto está aquí: https://github.com/Rafa-Javo/cdmx-crime-data-analysis.     \n- Es importante señalar que los delitos denunciados/registrados representan solo una porción de los crímenes totales cometidos. En la [ENVIPE 2020](https://www.inegi.org.mx/contenidos/programas/envipe/2020/doc/envipe2020_mex.pdf) se estima que a nivel nacional, en 2019, se denunciaron 11% de los delitos. Y en 69.1% de los casos se inició una carpeta de investigación.    \n- La fecha utilizada en las visualizaciones es la fecha de los hechos, no la fecha del inicio de la carpeta de investigación. ")
