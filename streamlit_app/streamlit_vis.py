@@ -27,7 +27,7 @@ month_to_num = {key: i+1 for i,key in enumerate(month_days)}
 num_to_month = {(i+1): key for i,key in enumerate(month_days)}
 
 #! leemos los datos
-DATA_URL = os.path.join(os.path.dirname(__file__), 'purged_carpetas_de_inv_fgj_cdmx.csv')
+DATA_URL = os.path.join(os.path.dirname(__file__), 'purged_carpetas_de_inv_fgj_cdmx_junio_2021.csv')
 #DATA_URL = ("purged_carpetas_de_inv_pgj_cdmx.csv")
 # DATA_URL = ("data/Delitos Alto Impacto municipio Morelia 2018-2019-2020.xlsx")
 
@@ -331,4 +331,4 @@ st.plotly_chart(fig)
 # INFORMACIÓN
 
 st.markdown("### Información")
-st.markdown("- *Registros con valores válidos en los campos utilizados para las visualizaciones. \n- Los datos son de libre acceso y fueron obtenidos el 16 de mayo de 2021 en [este link](https://datos.cdmx.gob.mx/dataset/carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico).    \n- El código de este proyecto está aquí: https://github.com/Rafa-Javo/cdmx-crime-data-analysis.     \n- Es importante señalar que los delitos denunciados/registrados representan solo una porción de los crímenes totales cometidos. En la [ENVIPE 2020](https://www.inegi.org.mx/contenidos/programas/envipe/2020/doc/envipe2020_mex.pdf) se estima que a nivel nacional, en 2019, se denunciaron 11% de los delitos. Y en 69.1% de los casos se inició una carpeta de investigación.    \n- La fecha utilizada en las visualizaciones es la fecha de los hechos, no la fecha del inicio de la carpeta de investigación. ")
+st.markdown("- *Registros con valores válidos en los campos utilizados para las visualizaciones. \n- Los datos son de libre acceso y fueron obtenidos el 29 de julio de 2021 en [este link](https://datos.cdmx.gob.mx/dataset/carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico). Solo abarcan hasta junio de 2021.    \n- El código de este proyecto está aquí: https://github.com/Rafa-Javo/cdmx-crime-data-analysis.     \n- Es importante señalar que los delitos denunciados/registrados representan solo una porción de los crímenes totales cometidos. En la [ENVIPE 2020](https://www.inegi.org.mx/contenidos/programas/envipe/2020/doc/envipe2020_mex.pdf) se estima que a nivel nacional, en 2019, se denunciaron 11% de los delitos. Y en 69.1% de los casos se inició una carpeta de investigación.    \n- La fecha utilizada en las visualizaciones es la fecha de los hechos, no la fecha del inicio de la carpeta de investigación. ")
