@@ -1,1 +1,2 @@
 # cdmx-crime-data-analysis
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/rafa-javo/cdmx-crime-data-analysis/main/streamlit_app/streamlit_vis.py)
